@@ -1,17 +1,56 @@
-import { memo } from 'react';
-import type { FC } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mineflayer Bot Control</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #1e1e1e; color: white; }
+        h1, h2 { color: #4caf50; }
+        input, button { padding: 10px; margin: 10px; font-size: 16px; }
+        #chat_log { max-height: 300px; overflow-y: auto; border: 1px solid #4caf50; padding: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Mineflayer Bot Control</h1>
+    
+    <p id="bot_status">🔴 Bot is offline</p>
+    
+    <button onclick="reconnectBot()">Reconnect Bot</button>
+    
+    <h2>Send Chat Message</h2>
+    <input type="text" id="chat_input" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
 
-import classes from './App.module.css';
-import resets from './components/_resets.module.css';
-import { Example1Desktop } from './components/Example1Desktop/Example1Desktop';
+    <h2>Chat Log:</h2>
+    <div id="chat_log"></div>
 
-interface Props {
-  className?: string;
-}
-export const App: FC<Props> = memo(function App(props = {}) {
-  return (
-    <div className={`${resets.clapyResets} ${classes.root}`}>
-      <Example1Desktop />
-    </div>
-  );
-});
+    <script>
+        const socket = io("http://localhost:3000");
+
+        socket.on("bot_status", (status) => {
+            document.getElementById("bot_status").innerText = status;
+        });
+
+        socket.on("chat_message", (data) => {
+            const chatLog = document.getElementById("chat_log");
+            chatLog.innerHTML += `<p><strong>${data.username}:</strong> ${data.message}</p>`;
+            chatLog.scrollTop = chatLog.scrollHeight; // Auto-scroll to latest message
+        });
+
+        function sendMessage() {
+            const message = document.getElementById("chat_input").value;
+            if (message.trim()) {
+                socket.emit("send_chat", message);
+                document.getElementById("chat_input").value = "";
+            }
+        }
+
+        function reconnectBot() {
+            socket.emit("reconnect_bot");
+            document.getElementById("bot_status").innerText = "🟡 Reconnecting...";
+        }
+    </script>
+</body>
+</html>
