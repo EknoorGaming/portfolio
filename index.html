@@ -2,146 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mineflayer Bot Control</title>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Eknoor - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
     <style>
+        @keyframes zoomOut {
+            from {
+                font-size: 1000px;
+            }
+            to {
+                font-size: 200px;
+            }
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
-            color: white;
+            font-family: 'Unbounded', sans-serif;
+            background-color: black; /* Pure black */
+            color: white; /* Pure white */
             margin: 0;
+        }
+
+        #hero {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-        }
-        h1, h2 {
-            color: #c084fc;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 400px;
             text-align: center;
+            overflow: hidden;
+            padding: 4rem 1rem;
         }
-        .center-btn {
-            display: block;
-            margin: 10px auto;
-            padding: 16px;
-            font-size: 16px;
-            border-radius: 25px;
-            border: none;
-            background: #c084fc;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
+
+        #mainText {
+            animation-name: zoomOut;
+            animation-duration: 1.5s;
+            animation-timing-function: ease;
+            animation-fill-mode: forwards;
+            font-size: 200px; /* Fixed size, no media queries */
+            opacity: 1;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
         }
-        .center-btn:hover {
-            background: #9b5dde;
-            transform: scale(1.1);
+
+        #hero p {
+            font-size: 1.25rem; /* Fixed size, no media queries */
+            font-weight: 300;
+            color: #b1acac; /* Lighter gray for subtitle */
         }
-        .input-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
+
+        #portfolio {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+            background-color: #000000; /* Slightly lighter black for portfolio section */
         }
-        input {
-            flex: 1;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 25px;
-            border: none;
-            outline: none;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+
+        #portfolio .container {
+            max-width: 1280px; /* Fixed max-width */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        #portfolio h2 {
+            font-size: 2.25rem; /* Fixed size, no media queries */
+            font-weight: 700;
             text-align: center;
+            color: #fff;
+            margin-bottom: 3rem;
         }
-        button {
-            background: #c084fc;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 25px;
-            border: none;
-            outline: none;
+
+        #portfolioCard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
+            gap: 2rem;
         }
-        button:hover {
-            background: #9b5dde;
-            transform: scale(1.1);
+
+        .link_button {
+            border-radius: 4px;
+            background: #4479BA;
+            color: #FFF;
+            padding: 8px 12px;
+            text-decoration: none;
         }
-        #chat_log {
-            max-height: 300px;
-            overflow-y: auto;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-            text-align: left;
-        }
-        .message {
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin: 5px 0;
-        }
+
+        .centered-and-cropped { object-fit: cover }
+
     </style>
 </head>
-<body>
-    <div class="container">
-        <img src="https://img.icons8.com/nolan/200/feather-client.png" height="70px" alt="Server Logo">
-        <p id="bot_status">🔴 Bot is offline</p>
-        <button class="center-btn" onclick="reconnectBot()">Reconnect Bot</button>
-        <div class="input-container">
-            <input type="text" id="chat_input" placeholder="Type a message...">
-            <button onclick="sendMessage()">🚀</button>
-        </div>
-        <h2>Chat Log:</h2>
-        <div id="chat_log"></div>
+<body class="antialiased">
+
+    <div id="hero">
+        <h1 id="mainText">Eknoor</h1>
+        <p>Passionate Web Developer</p>
     </div>
-    <script>
-        const socket = io("http://localhost:3000");
 
-        socket.on("bot_status", (status) => {
-            document.getElementById("bot_status").innerText = status;
-        });
+    <section id="portfolio">
+        <div class="container">
+            <h2>My Work</h2>
 
-        socket.on("chat_message", (data) => {
-            const chatLog = document.getElementById("chat_log");
-            const messageElement = document.createElement("p");
-            messageElement.classList.add("message");
-            messageElement.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
-            chatLog.appendChild(messageElement);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        });
+            <div id="portfolioCard">
+                <div style="border-color: slategrey; border-radius: 20px;">
+                    <img src="1pic.png" alt="Project One" height="510" width="706" style="border-radius: 25px">
+                    <div class="p-6">
+                        <h3>Gemini Clone</h3>
+                        <p>
+                            A web app using Gemini API to make a full gemini-type clone with full functionality
+                        </p>
+                        <a href="webini.html" class="link_button">View Project</a>
+                    </div>
+                </div>
 
-        function sendMessage() {
-            const message = document.getElementById("chat_input").value;
-            if (message.trim()) {
-                socket.emit("send_chat", message);
-                document.getElementById("chat_input").value = "";
-            }
-        }
+                <div>
+                    <img src="3pic.png" alt="Project Two" style="border-radius: 20px; width: 600; height: 400; object-fit: cover;">
+                    <div class="p-6">
+                        <h3>Terminal Reimagined</h3>
+                        <p>
+                            A web app using JS to show a command line interface that has custom built functions
+                        </p>
+                        <a href="webinal.html" class="link_button">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        function reconnectBot() {
-            socket.emit("reconnect_bot");
-            document.getElementById("bot_status").innerText = "🟡 Reconnecting...";
-        }
-    </script>
+    <p style="color: slategrey; text-align: center;">This site is live at eknoorsingh.minecraftnoob.com</p>
+
 </body>
 </html>
